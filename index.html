@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventureros del Afiche - Edición Avanzada 3° Básico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #f3e8ff 100%);
+            min-height: 100vh;
+            font-size: 1.125rem; /* Base size enlarged to 18px */
+            line-height: 1.6;
+        }
+        .font-kids {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        .bounce-subtle {
+            animation: bounceSubtle 2.5s infinite ease-in-out;
+        }
+        @keyframes bounceSubtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .pulse-glow {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- HEADER CON PUNTUACIÓN Y BARRA DE PROGRESO -->
+    <header class="bg-gradient-to-r from-indigo-700 via-blue-600 to-teal-600 text-white shadow-xl py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-4xl bg-white/20 p-2 rounded-2xl shadow-inner">🎨</span>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold font-kids tracking-wide">Aventureros del Afiche</h1>
+                    <p class="text-sm sm:text-base text-blue-100 font-medium">Taller de Lenguaje y Comunicación • 3° Básico</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 bg-white/15 px-5 py-2.5 rounded-2xl backdrop-blur-md border border-white/20 shadow-md">
+                <div class="flex items-center gap-2 text-amber-300 font-extrabold text-xl">
+                    <span class="text-2xl">⭐</span>
+                    <span id="score-display">0</span> <span class="text-sm text-white/90">pts</span>
+                </div>
+                <div class="h-8 w-px bg-white/30"></div>
+                <div class="text-base font-bold text-emerald-300" id="badge-display">Diseñador Aprendiz</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- SCREEN 0: BIENVENIDA E INTRODUCCIÓN TEÓRICA -->
+        <section id="screen-welcome" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-indigo-200">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="text-7xl sm:text-8xl mb-4 bounce-subtle">🦁📜</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-kids text-indigo-900 mb-4">¡Conviértete en un Creador de Afiches!</h2>
+                
+                <p class="text-slate-700 text-lg sm:text-xl mb-8 leading-relaxed">
+                    Un <strong>afiche</strong> es un texto no literario visual diseñado para captar la atención rápidamente, transmitir un mensaje claro e influir en las acciones o pensamientos de las personas.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left">
+                    <div class="bg-blue-50 p-5 rounded-2xl border-2 border-blue-200">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <h3 class="font-extrabold font-kids text-blue-900 text-lg mb-1">1. Objetivo y Tipos</h3>
+                        <p class="text-sm text-slate-700 leading-snug">Aprende qué busca un afiche: informarte, invitarte a un evento o convencerte de cuidar el planeta.</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border-2 border-amber-200">
+                        <div class="text-3xl mb-2">🧩</div>
+                        <h3 class="font-extrabold font-kids text-amber-900 text-lg mb-1">2. Anatomía Completa</h3>
+                        <p class="text-sm text-slate-700 leading-snug">Identifica sus 5 partes fundamentales: Eslogan, Imagen, Datos, Emisor y Llamado a la Acción.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-5 rounded-2xl border-2 border-emerald-200">
+                        <div class="text-3xl mb-2">✍️</div>
+                        <h3 class="font-extrabold font-kids text-emerald-900 text-lg mb-1">3. Taller Creativo</h3>
+                        <p class="text-sm text-slate-700 leading-snug">Aplica la lista de cotejo y redacta tu propio afiche con un eslogan persuasivo e imagen idónea.</p>
+                    </div>
+                </div>
+
+                <button onclick="startGame()" class="px-10 py-5 bg-gradient-to-r from-emerald-500 via-teal-600 to-indigo-600 text-white font-extrabold font-kids text-2xl rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition transform active:scale-95">
+                    🚀 ¡Comenzar el Desafío!
+                </button>
+            </div>
+        </section>
+
+        <!-- SCREEN 1: MISIÓN 1 - EL OBJETIVO Y TIPOS DE AFICHE -->
+        <section id="screen-mission-1" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-amber-300">
+            <div class="flex justify-between items-center mb-6">
+                <span class="bg-amber-100 text-amber-900 font-extrabold px-4 py-2 rounded-xl text-base font-kids border border-amber-300">Misión 1 de 3</span>
+                <span class="text-base font-bold text-slate-500">¿Para qué sirve un afiche?</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-kids text-slate-900 mb-3">Pregunta de Análisis:</h2>
+            <p class="text-slate-700 text-lg mb-6">Observa el siguiente caso de estudio en la escuela y determina cuál es el propósito central que debe cumplir el afiche.</p>
+
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-6 mb-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <span class="text-4xl">📢</span>
+                    <div>
+                        <h3 class="font-extrabold font-kids text-amber-950 text-xl">El Caso del Club de Medio Ambiente:</h3>
+                        <p class="text-slate-800 text-base sm:text-lg mt-2 leading-relaxed">
+                            Los estudiantes de 3° básico quieren organizar una <strong>Campaña de Reciclaje de Botellas</strong> en el colegio. Necesitan que todos los niños de 1° a 8° básico traigan sus botellas plásticas vacías el próximo viernes al patio central.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="font-extrabold font-kids text-indigo-900 text-xl mb-4">¿Cuál es el objetivo principal que debe tener este afiche?</h3>
+
+            <div id="m1-options" class="grid grid-cols-1 gap-4 mb-6">
+                <!-- Options injected via JS -->
+            </div>
+
+            <div id="m1-feedback" class="hidden p-5 rounded-2xl text-base font-bold mb-6"></div>
+
+            <div class="flex justify-end">
+                <button id="m1-next-btn" onclick="nextMission(2)" class="hidden px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold font-kids text-xl rounded-xl shadow-lg transition">
+                    Ir a la Misión 2: Anatomía ➡️
+                </button>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: MISIÓN 2 - ANATOMÍA Y LAS 5 PARTES DEL AFICHE -->
+        <section id="screen-mission-2" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-indigo-300">
+            <div class="flex justify-between items-center mb-6">
+                <span class="bg-indigo-100 text-indigo-900 font-extrabold px-4 py-2 rounded-xl text-base font-kids border border-indigo-300">Misión 2 de 3</span>
+                <span class="text-base font-bold text-slate-500">Reconociendo las 5 Partes</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-kids text-slate-900 mb-2">Explorador de Componentes</h2>
+            <p class="text-slate-700 text-base sm:text-lg mb-6">Haz clic en la sección del afiche de la izquierda que responda a la indicación de la derecha.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Afiche Interactivo (5 partes) -->
+                <div class="lg:col-span-6 bg-amber-50/60 border-4 border-amber-300 rounded-3xl p-5 flex flex-col gap-3 shadow-inner">
+                    <!-- 1. Título / Eslogan -->
+                    <div id="part-title" onclick="checkPosterPart('title')" class="cursor-pointer bg-white p-4 rounded-2xl border-2 border-indigo-400 hover:bg-indigo-50 transition shadow-sm group">
+                        <span class="text-xs font-extrabold text-indigo-600 block uppercase tracking-wider mb-1">1. Título / Eslogan Persuasivo</span>
+                        <p class="font-kids text-xl font-extrabold text-indigo-950 group-hover:scale-[1.01] transition transform">¡Dale una segunda vida al planeta, recicla hoy! 🌿✨</p>
+                    </div>
+
+                    <!-- 2. Imagen Central -->
+                    <div id="part-image" onclick="checkPosterPart('image')" class="cursor-pointer bg-white p-6 rounded-2xl border-2 border-emerald-400 hover:bg-emerald-50 transition shadow-sm text-center group">
+                        <span class="text-xs font-extrabold text-emerald-600 block uppercase tracking-wider mb-2">2. Imagen o Ilustración Principal</span>
+                        <div class="text-6xl my-2">♻️🌎🌱</div>
+                    </div>
+
+                    <!-- 3. Llamado a la Acción -->
+                    <div id="part-action" onclick="checkPosterPart('action')" class="cursor-pointer bg-emerald-100 p-3 rounded-2xl border-2 border-emerald-500 hover:bg-emerald-200 transition shadow-sm text-center">
+                        <span class="text-xs font-extrabold text-emerald-800 block uppercase tracking-wider mb-1">3. Llamado a la Acción (Verbo Imperativo)</span>
+                        <p class="font-extrabold text-emerald-950 text-base">¡Trae tus botellas plásticas limpias y aplastadas!</p>
+                    </div>
+
+                    <!-- 4. Datos Clave -->
+                    <div id="part-data" onclick="checkPosterPart('data')" class="cursor-pointer bg-white p-4 rounded-2xl border-2 border-amber-400 hover:bg-amber-50 transition shadow-sm">
+                        <span class="text-xs font-extrabold text-amber-600 block uppercase tracking-wider mb-1">4. Datos Clave (Fecha, Hora y Lugar)</span>
+                        <p class="text-sm sm:text-base text-slate-800 font-bold">📅 Viernes 24 de Octubre | ⏰ 10:00 hrs | 📍 Patio Central del Colegio</p>
+                    </div>
+
+                    <!-- 5. Emisor / Organizador -->
+                    <div id="part-emisor" onclick="checkPosterPart('emisor')" class="cursor-pointer bg-white p-3 rounded-2xl border-2 border-purple-400 hover:bg-purple-50 transition shadow-sm text-right">
+                        <span class="text-xs font-extrabold text-purple-600 block uppercase tracking-wider mb-1">5. Emisor / Organizador</span>
+                        <p class="text-xs sm:text-sm text-purple-950 font-extrabold">Organiza: Brigada Ecológica de 3° Básico 🏫</p>
+                    </div>
+                </div>
+
+                <!-- Panel de Instrucciones e Preguntas -->
+                <div class="lg:col-span-6 bg-slate-50 p-6 sm:p-8 rounded-3xl border-2 border-slate-200 flex flex-col justify-between h-full shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-5xl" id="m2-icon">🔍</span>
+                            <div>
+                                <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-widest" id="m2-step-num">Paso 1 de 5</span>
+                                <h3 class="font-extrabold font-kids text-slate-900 text-xl sm:text-2xl" id="m2-question-title">Identifica la parte correspondiente</h3>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-700 text-lg leading-relaxed mb-4" id="m2-question-desc">
+                            Cargando instrucción...
+                        </p>
+
+                        <div id="m2-explanation" class="hidden bg-blue-50 border border-blue-200 rounded-2xl p-4 text-sm text-blue-900 leading-normal mb-4">
+                            <!-- Detailed pedagogical explanation -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="m2-feedback" class="hidden p-4 rounded-2xl text-base font-bold text-center mb-4"></div>
+
+                        <button id="m2-next-btn" onclick="nextPosterChallenge()" class="hidden w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold font-kids text-xl rounded-xl shadow-lg transition">
+                            Siguiente Componente ➡️
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 3: MISIÓN 3 - TALLER DE CREACIÓN Y LISTA DE COTEJO -->
+        <section id="screen-mission-3" class="hidden bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border-4 border-emerald-300">
+            <div class="flex justify-between items-center mb-6">
+                <span class="bg-emerald-100 text-emerald-900 font-extrabold px-4 py-2 rounded-xl text-base font-kids border border-emerald-300">Misión 3 de 3</span>
+                <span class="text-base font-bold text-slate-500">Taller de Escritura y Diseño</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-kids text-slate-900 mb-2">¡Crea tu Afiche para la "Feria del Libro Escolar"!</h2>
+            <p class="text-slate-700 text-base sm:text-lg mb-6">Completa cada sección planificando tu texto con la lista de cotejo de un afiche perfecto.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                <!-- COLUMNA 1: FORMULARIO Y LISTA DE COTEJO -->
+                <div class="lg:col-span-6 space-y-6">
+
+                    <!-- Lista de Cotejo Informativa -->
+                    <div class="bg-emerald-50 border-2 border-emerald-200 p-5 rounded-2xl">
+                        <h4 class="font-extrabold font-kids text-emerald-950 text-lg mb-3 flex items-center gap-2">
+                            <span>📋</span> Lista de Cotejo del Afiche Exitoso:
+                        </h4>
+                        <ul class="text-sm text-emerald-900 space-y-2 font-medium">
+                            <li class="flex items-center gap-2"><span id="chk-1">⚪</span> <strong>Eslogan:</strong> Breve, llamativo y en letra grande.</li>
+                            <li class="flex items-center gap-2"><span id="chk-2">⚪</span> <strong>Imagen:</strong> Atractiva y directamente ligada al tema.</li>
+                            <li class="flex items-center gap-2"><span id="chk-3">⚪</span> <strong>Datos Clave:</strong> Fecha, hora y lugar precisos.</li>
+                            <li class="flex items-center gap-2"><span id="chk-4">⚪</span> <strong>Organizador:</strong> ¿Quién invita o publica el afiche?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Paso 1: Eslogan escrito -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <label class="block font-extrabold font-kids text-base text-slate-900 mb-2">
+                            1. Escribe o selecciona tu Eslogan (Título Principal):
+                        </label>
+                        <p class="text-xs text-slate-500 mb-2">Recuerda usar palabras que motiven a la lectura.</p>
+                        
+                        <div class="space-y-3">
+                            <input type="text" id="builder-custom-slogan" oninput="updateCustomPoster()" placeholder="Escribe tu propio eslogan aquí (ej: ¡Lee y sueña sin límites!)" class="w-full p-3.5 bg-white border-2 border-slate-300 rounded-xl font-bold text-base text-slate-800 focus:border-emerald-500 outline-none transition">
+                            
+                            <p class="text-xs font-bold text-slate-400 uppercase text-center">-- O elige una opción sugerida --</p>
+
+                            <select id="builder-preset-slogan" onchange="usePresetSlogan()" class="w-full p-3.5 bg-white border border-slate-300 rounded-xl font-medium text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="">-- Opciones sugeridas --</option>
+                                <option value="¡Abre un libro y descubre un mundo de aventuras! 📚✨">¡Abre un libro y descubre un mundo de aventuras! 📚✨</option>
+                                <option value="¡Sumérgete en las historias más fantásticas del colegio! 🐉📖">¡Sumérgete en las historias más fantásticas del colegio! 🐉📖</option>
+                                <option value="Los libros son papeles con letras impresas.">Los libros son papeles con letras impresas. (Poco llamativo)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Paso 2: Elección de Imagen -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <label class="block font-extrabold font-kids text-base text-slate-900 mb-2">
+                            2. Selecciona la Ilustración Central:
+                        </label>
+                        <select id="builder-image" onchange="updateCustomPoster()" class="w-full p-3.5 bg-white border border-slate-300 rounded-xl font-medium text-base focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="">-- Elige una ilustración --</option>
+                            <option value="📚🏰🚀">Libro abierto volando hacia un castillo y un cohete (📚🏰🚀)</option>
+                            <option value="📖🧙‍♂️✨">Libro mágico con destellos y un mago (📖🧙‍♂️✨)</option>
+                            <option value="🍕🥤🍟">Una pizza con papas fritas y bebida (🍕🥤🍟)</option>
+                        </select>
+                    </div>
+
+                    <!-- Paso 3: Datos de la actividad -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <label class="block font-extrabold font-kids text-base text-slate-900 mb-2">
+                            3. Selecciona los Datos Clave (¿Cuándo y dónde?):
+                        </label>
+                        <select id="builder-data" onchange="updateCustomPoster()" class="w-full p-3.5 bg-white border border-slate-300 rounded-xl font-medium text-base focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="">-- Elige la fecha y lugar --</option>
+                            <option value="📅 Jueves 12 de Noviembre | ⏰ 11:00 hrs | 📍 Biblioteca Escolar">📅 Jueves 12 de Noviembre | ⏰ 11:00 hrs | 📍 Biblioteca Escolar</option>
+                            <option value="En algún momento del próximo mes en la plaza de la ciudad.">En algún momento del próximo mes en la plaza. (Impreciso)</option>
+                        </select>
+                    </div>
+
+                    <!-- Paso 4: Emisor/Organizador -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <label class="block font-extrabold font-kids text-base text-slate-900 mb-2">
+                            4. Escribe quién organiza (Emisor):
+                        </label>
+                        <input type="text" id="builder-emisor" oninput="updateCustomPoster()" placeholder="Ej: Equipo CRA y 3° Básico" value="Organiza: Centro de Recursos de Aprendizaje (CRA)" class="w-full p-3.5 bg-white border-2 border-slate-300 rounded-xl font-bold text-base text-slate-800 focus:border-emerald-500 outline-none transition">
+                    </div>
+
+                    <button onclick="submitCustomPoster()" class="w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold font-kids text-2xl rounded-2xl shadow-xl transition transform active:scale-95">
+                        ✨ ¡Evaluar y Publicar mi Afiche!
+                    </button>
+                </div>
+
+                <!-- COLUMNA 2: VISTA PREVIA EN TIEMPO REAL -->
+                <div class="lg:col-span-6 flex flex-col justify-between">
+                    <div class="bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 border-4 border-amber-300 rounded-3xl p-6 shadow-xl text-center sticky top-24">
+                        <div class="mb-4">
+                            <span class="text-xs font-extrabold uppercase tracking-widest text-amber-800 bg-amber-200/80 px-4 py-1.5 rounded-full border border-amber-300">
+                                Vista Previa del Afiche
+                            </span>
+                        </div>
+
+                        <!-- Eslogan / Título -->
+                        <div id="preview-title" class="font-kids text-2xl sm:text-3xl font-extrabold text-indigo-950 my-4 min-h-[4rem] flex items-center justify-center bg-white/80 p-4 rounded-2xl border-2 border-indigo-200 shadow-sm leading-tight">
+                            [ Escribe o elige un Eslogan ]
+                        </div>
+
+                        <!-- Imagen -->
+                        <div id="preview-image" class="text-7xl sm:text-8xl my-6 filter drop-shadow-md min-h-[6rem] flex items-center justify-center">
+                            🖼️
+                        </div>
+
+                        <!-- Datos Clave -->
+                        <div id="preview-data" class="text-base sm:text-lg font-bold text-slate-800 bg-white/80 p-4 rounded-2xl border-2 border-amber-200 min-h-[3rem] flex items-center justify-center my-4 shadow-sm">
+                            [ Datos: Fecha, Hora y Lugar ]
+                        </div>
+
+                        <!-- Emisor -->
+                        <div id="preview-emisor" class="text-sm font-extrabold text-purple-900 text-right bg-white/60 p-2.5 rounded-xl border border-purple-200">
+                            Organiza: [ Tu nombre o grupo ]
+                        </div>
+
+                        <div id="builder-feedback" class="mt-6 p-4 rounded-2xl text-base font-bold text-center hidden"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 4: EVALUACIÓN Y CELEBRACIÓN FINAL -->
+        <section id="screen-success" class="hidden bg-white rounded-3xl shadow-2xl p-8 sm:p-12 text-center border-4 border-emerald-400 max-w-2xl mx-auto">
+            <div class="text-8xl mb-6 bounce-subtle">🏆🌟</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-kids text-emerald-700 mb-3">¡Felicitaciones, Maestro del Afiche!</h2>
+            <p class="text-slate-700 text-lg sm:text-xl mb-8 leading-relaxed">
+                Has demostrado comprender qué es un afiche, para qué sirve, cuáles son sus 5 partes esenciales y cómo redactar un mensaje claro e impactante.
+            </p>
+
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-3xl p-6 mb-8 shadow-inner">
+                <div class="text-base text-emerald-900 font-extrabold mb-1 uppercase tracking-wide">Puntuación Total Obtenida:</div>
+                <div id="final-score" class="text-5xl font-extrabold font-kids text-emerald-600 my-2">0 pts</div>
+                <div id="final-badge" class="text-lg text-teal-800 font-bold mt-2">¡Diseñador Estelar de Afiches! ⭐</div>
+            </div>
+
+            <button onclick="restartGame()" class="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold font-kids text-2xl rounded-2xl shadow-xl transition transform active:scale-95">
+                🔄 Jugar de Nuevo
+            </button>
+        </section>
+
+    </main>
+
+    <!-- FOOTER EDUCATIVO -->
+    <footer class="text-center py-6 text-sm text-slate-600 bg-white/60 backdrop-blur-sm border-t border-slate-200 mt-8 font-medium">
+        Recurso Educativo Digital de Lenguaje y Comunicación • 3° Año de Educación Básica
+    </footer>
+
+    <script>
+        let score = 0;
+        let m2Step = 0;
+
+        // Web Audio API Sound generator
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'success') {
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2); // A5
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } else if (type === 'error') {
+                osc.frequency.setValueAtTime(261.63, audioCtx.currentTime); // C4
+                osc.frequency.setValueAtTime(174.61, audioCtx.currentTime + 0.12); // F3
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score-display').textContent = score;
+            let badge = "Diseñador Aprendiz";
+            if (score >= 60) badge = "Explorador de Afiches";
+            if (score >= 140) badge = "Maestro del Afiche ⭐";
+            document.getElementById('badge-display').textContent = badge;
+        }
+
+        function startGame() {
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-mission-1').classList.remove('hidden');
+            loadMission1();
+        }
+
+        // MISIÓN 1: EL OBJETIVO DEL AFICHE
+        function loadMission1() {
+            const optionsContainer = document.getElementById('m1-options');
+            const options = [
+                {
+                    text: "Convencer e invitar a la comunidad escolar a participar en el reciclaje mediante un mensaje breve, datos claros e imágenes atractivas.",
+                    correct: true,
+                    reason: "¡Correcto! El afiche busca informar y persuadir rápidamente a las personas usando texto e imagen combinados."
+                },
+                {
+                    text: "Escribir un cuento largo de tres capítulos que narre la historia de una botella de plástico que viaja por el océano.",
+                    correct: false,
+                    reason: "Incorrecto. Eso sería un texto narrativo (un cuento). El afiche no relata historias largas."
+                },
+                {
+                    text: "Dar una orden secreta en una carta privada enviada solo al director del establecimiento.",
+                    correct: false,
+                    reason: "Incorrecto. El afiche es un texto PÚBLICO y VISUAL que debe ser visto por muchas personas a la vez."
+                }
+            ];
+
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+
+            optionsContainer.innerHTML = '';
+            options.forEach((opt) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-50 border-2 border-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 p-5 rounded-2xl text-left text-base font-bold transition text-slate-800 flex items-start gap-4 shadow-sm";
+                btn.innerHTML = `<span class="text-2xl">📌</span> <span>${opt.text}</span>`;
+                btn.onclick = () => checkMission1(opt, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkMission1(selectedOption, btnElement) {
+            const feedback = document.getElementById('m1-feedback');
+            feedback.classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('#m1-options button');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedOption.correct) {
+                playSound('success');
+                btnElement.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-950');
+                feedback.className = "p-5 rounded-2xl text-base font-bold mb-6 bg-emerald-100 text-emerald-900 border-2 border-emerald-300";
+                feedback.innerHTML = `🎉 ${selectedOption.reason}`;
+                updateScore(50);
+                document.getElementById('m1-next-btn').classList.remove('hidden');
+            } else {
+                playSound('error');
+                btnElement.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-950');
+                feedback.className = "p-5 rounded-2xl text-base font-bold mb-6 bg-rose-100 text-rose-900 border-2 border-rose-300";
+                feedback.innerHTML = `❌ ${selectedOption.reason}`;
+                document.getElementById('m1-next-btn').classList.remove('hidden');
+            }
+        }
+
+        function nextMission(missionNumber) {
+            if (missionNumber === 2) {
+                document.getElementById('screen-mission-1').classList.add('hidden');
+                document.getElementById('screen-mission-2').classList.remove('hidden');
+                loadMission2Step();
+            } else if (missionNumber === 3) {
+                document.getElementById('screen-mission-2').classList.add('hidden');
+                document.getElementById('screen-mission-3').classList.remove('hidden');
+                updateCustomPoster();
+            }
+        }
+
+        // MISIÓN 2: LAS 5 PARTES DEL AFICHE
+        const m2Steps = [
+            {
+                target: 'title',
+                num: 'Componente 1 de 5',
+                icon: '📝',
+                title: 'Encuentra el Eslogan o Título Principal',
+                desc: 'Haz clic en la frase breve y llamativa con letras grandes diseñada para captar la atención inmediatamente.',
+                exp: '💡 **El Eslogan** es una frase corta, fácil de recordar y convincente que resume la idea principal del afiche.'
+            },
+            {
+                target: 'image',
+                num: 'Componente 2 de 5',
+                icon: '🎨',
+                title: 'Encuentra la Imagen o Ilustración Principal',
+                desc: 'Haz clic en el dibujo o fotografía central que apoya visualmente el tema del afiche.',
+                exp: '💡 **La Imagen** ayuda a que el mensaje entre por los ojos al instante. Debe estar directamente relacionada con el tema.'
+            },
+            {
+                target: 'action',
+                num: 'Componente 3 de 5',
+                icon: '⚡',
+                title: 'Encuentra el Llamado a la Acción',
+                desc: 'Haz clic en la instrucción redactada con un verbo imperativo (ej: ¡Trae!, ¡Ven!, ¡Cuida!).',
+                exp: '💡 **El Llamado a la Acción** le dice explícitamente al lector qué debe hacer (ej: "¡Trae tus botellas!", "¡Asiste hoy!").'
+            },
+            {
+                target: 'data',
+                num: 'Componente 4 de 5',
+                icon: '📅',
+                title: 'Encuentra los Datos Clave',
+                desc: 'Haz clic en la sección que indica los detalles prácticos: fecha, hora y lugar del evento.',
+                exp: '💡 **Los Datos Clave** entregan la información necesaria para que las personas sepan cuándo y dónde participar.'
+            },
+            {
+                target: 'emisor',
+                num: 'Componente 5 de 5',
+                icon: '🏫',
+                title: 'Encuentra el Emisor o Firma',
+                desc: 'Haz clic en el recuadro que muestra qué institución o persona creó y financia el afiche.',
+                exp: '💡 **El Emisor** nos dice quién respalda la publicación para darle validez y confianza al afiche.'
+            }
+        ];
+
+        function loadMission2Step() {
+            if (m2Step >= m2Steps.length) {
+                document.getElementById('screen-mission-2').classList.add('hidden');
+                document.getElementById('screen-mission-3').classList.remove('hidden');
+                updateCustomPoster();
+                return;
+            }
+            const current = m2Steps[m2Step];
+            document.getElementById('m2-step-num').textContent = current.num;
+            document.getElementById('m2-icon').textContent = current.icon;
+            document.getElementById('m2-question-title').textContent = current.title;
+            document.getElementById('m2-question-desc').textContent = current.desc;
+            
+            const expBox = document.getElementById('m2-explanation');
+            expBox.classList.remove('hidden');
+            expBox.innerHTML = current.exp;
+
+            document.getElementById('m2-feedback').className = "hidden";
+            document.getElementById('m2-next-btn').classList.add('hidden');
+
+            // Reset highlight
+            ['title', 'image', 'action', 'data', 'emisor'].forEach(p => {
+                const el = document.getElementById(`part-${p}`);
+                el.classList.remove('ring-4', 'ring-emerald-400', 'ring-rose-400', 'opacity-40');
+                el.style.pointerEvents = 'auto';
+            });
+        }
+
+        function checkPosterPart(selectedPart) {
+            const current = m2Steps[m2Step];
+            const feedback = document.getElementById('m2-feedback');
+            feedback.classList.remove('hidden');
+
+            if (selectedPart === current.target) {
+                playSound('success');
+                updateScore(20);
+                document.getElementById(`part-${selectedPart}`).classList.add('ring-4', 'ring-emerald-400');
+                feedback.className = "p-4 rounded-2xl text-base font-bold text-center bg-emerald-100 text-emerald-900 border-2 border-emerald-300 mb-4";
+                feedback.innerHTML = "🎉 ¡Excelente! Has identificado la parte correcta del afiche.";
+                
+                // Lock other parts
+                ['title', 'image', 'action', 'data', 'emisor'].forEach(p => {
+                    document.getElementById(`part-${p}`).style.pointerEvents = 'none';
+                });
+
+                document.getElementById('m2-next-btn').classList.remove('hidden');
+            } else {
+                playSound('error');
+                document.getElementById(`part-${selectedPart}`).classList.add('ring-4', 'ring-rose-400');
+                feedback.className = "p-4 rounded-2xl text-base font-bold text-center bg-rose-100 text-rose-900 border-2 border-rose-300 mb-4";
+                feedback.innerHTML = "❌ Esa parte no corresponde a lo solicitado. ¡Revisa la definición e inténtalo otra vez!";
+            }
+        }
+
+        function nextPosterChallenge() {
+            m2Step++;
+            loadMission2Step();
+        }
+
+        // MISIÓN 3: CREACIÓN Y LISTA DE COTEJO
+        function usePresetSlogan() {
+            const presetVal = document.getElementById('builder-preset-slogan').value;
+            if (presetVal) {
+                document.getElementById('builder-custom-slogan').value = presetVal;
+            }
+            updateCustomPoster();
+        }
+
+        function updateCustomPoster() {
+            const customSlogan = document.getElementById('builder-custom-slogan').value.trim();
+            const imgVal = document.getElementById('builder-image').value;
+            const dataVal = document.getElementById('builder-data').value;
+            const emisorVal = document.getElementById('builder-emisor').value.trim();
+
+            // Preview updating
+            document.getElementById('preview-title').textContent = customSlogan || "[ Escribe o elige un Eslogan ]";
+            document.getElementById('preview-image').textContent = imgVal || "🖼️";
+            document.getElementById('preview-data').textContent = dataVal || "[ Datos: Fecha, Hora y Lugar ]";
+            document.getElementById('preview-emisor').textContent = emisorVal ? `Organiza: ${emisorVal}` : "Organiza: [ Tu nombre o grupo ]";
+
+            // Update checklist states
+            document.getElementById('chk-1').textContent = customSlogan.length > 5 ? "🟢" : "⚪";
+            document.getElementById('chk-2').textContent = imgVal !== "" ? "🟢" : "⚪";
+            document.getElementById('chk-3').textContent = dataVal !== "" ? "🟢" : "⚪";
+            document.getElementById('chk-4').textContent = emisorVal.length > 3 ? "🟢" : "⚪";
+        }
+
+        function submitCustomPoster() {
+            const customSlogan = document.getElementById('builder-custom-slogan').value.trim();
+            const imgVal = document.getElementById('builder-image').value;
+            const dataVal = document.getElementById('builder-data').value;
+            const emisorVal = document.getElementById('builder-emisor').value.trim();
+            const feedback = document.getElementById('builder-feedback');
+
+            feedback.classList.remove('hidden');
+
+            // Evaluation rules
+            const hasSlogan = customSlogan.length >= 8;
+            const isGoodSlogan = !customSlogan.includes("papeles con letras");
+            const hasGoodImage = imgVal.includes("📚") || imgVal.includes("📖");
+            const hasGoodData = dataVal.includes("Jueves 12");
+            const hasEmisor = emisorVal.length >= 3;
+
+            if (hasSlogan && isGoodSlogan && hasGoodImage && hasGoodData && hasEmisor) {
+                playSound('success');
+                updateScore(70);
+                feedback.className = "mt-6 p-4 rounded-2xl text-base font-bold text-center bg-emerald-100 text-emerald-900 border-2 border-emerald-300";
+                feedback.innerHTML = "🌟 ¡Afiche Extraordinario! Cumpliste con toda la lista de cotejo: eslogan atractivo, imagen acorde al tema del libro, datos precisos e indicación del emisor.";
+
+                setTimeout(() => {
+                    document.getElementById('screen-mission-3').classList.add('hidden');
+                    document.getElementById('screen-success').classList.remove('hidden');
+                    document.getElementById('final-score').textContent = score + " pts";
+                }, 2500);
+            } else {
+                playSound('error');
+                feedback.className = "mt-6 p-4 rounded-2xl text-base font-bold text-center bg-rose-100 text-rose-900 border-2 border-rose-300";
+                
+                let errorMsg = "⚠️ Faltan detalles para completar tu afiche:<br><ul class='text-sm text-left mt-2 font-semibold list-disc pl-5'>";
+                if (!hasSlogan) errorMsg += "<li>Escribe un eslogan más largo y motivador.</li>";
+                if (!isGoodSlogan) errorMsg += "<li>El eslogan elegido no entusiasma al lector. ¡Elige uno más atractivo!</li>";
+                if (!hasGoodImage) errorMsg += "<li>Selecciona una imagen relacionada con libros y lectura.</li>";
+                if (!hasGoodData) errorMsg += "<li>Asegúrate de incluir la fecha y el lugar preciso de la feria.</li>";
+                if (!hasEmisor) errorMsg += "<li>Escribe el nombre de la persona o grupo que organiza.</li>";
+                errorMsg += "</ul>";
+                
+                feedback.innerHTML = errorMsg;
+            }
+        }
+
+        function restartGame() {
+            score = 0;
+            m2Step = 0;
+            document.getElementById('score-display').textContent = '0';
+            document.getElementById('badge-display').textContent = 'Diseñador Aprendiz';
+            document.getElementById('screen-success').classList.add('hidden');
+            document.getElementById('screen-welcome').classList.remove('hidden');
+            
+            document.getElementById('builder-custom-slogan').value = '';
+            document.getElementById('builder-preset-slogan').value = '';
+            document.getElementById('builder-image').value = '';
+            document.getElementById('builder-data').value = '';
+            document.getElementById('builder-emisor').value = 'Organiza: Centro de Recursos de Aprendizaje (CRA)';
+            updateCustomPoster();
+        }
+    </script>
+</body>
+</html>
